@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title id="cloakable">Compass - Browser</title>
+    <link id="themeStylesheet" rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link id="cloak" rel="icon" type="image/png" href="images/logo1.png">
+    <script src="/uv/uv.bundle.js"></script>
+    <script src="/uv/uv.config.js"></script>
+    <script src="/baremux/index.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta property="og:title" content="Compass Network" />
+    <meta property="og:description" content="We are Compass Network We Have a Fast Proxy Clean Ui And We have lots of Games  " />
+    <meta property="og:image" content="https://compassnetwork.online/images/logo1.png"/>
+    <meta property="og:url" content="https://compassnetwork.online" />                                                            
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281572560121819"
+     crossorigin="anonymous"></script>
+        <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", async () => {
+                await navigator.serviceWorker.register("/uv/sw.js");
+            });
+        }
+        </script>
+  </head>                                                                                          
+<body>                                                                                                                                                                                                                        
+                                                                                                        
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: auto;
+    }
+
+    #vanta-globe {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+      padding-top: 20%;
+    }
+  </style>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+
+<script src="js/tabcloak.js"></script>
+
+
+
+
+
+<div class="top-bar">
+  <div class="tab-row">
+    
+    <div class="tab-bar" id="tabBar">
+      <div class="add-tab" onclick="addTab('default.html')"><img src="images/plus.png" style="width: 15px;" alt=""></div>
+    </div>
+  </div>
+
+  <div class="url-row">
+        <button  onclick="reloadTab()" style="background:none;"><img src="images/refresh.png" id="reload" class="nvimg" alt=""></button>
+        <button onclick="goBack()" style="background:none;"><img src="images/left.png" class="nvimg" alt=""></button>
+        <button onclick="goForward()"style="background:none;"><img src="images/right.png" class="nvimg" alt=""></button>
+        <input type="text" id="urlInput" placeholder="Type to search with google or enter url">
+        <button id="searchButton" style="background:none;"><img src="images/search.png" alt=""></button>
+
+
+  </div>
+</div>
+
+<div id="iframeContainer" style="height: 90vh; position: relative;"></div>
+
+
+<script>
+  const urlInput = document.getElementById('urlInput');
+
+
+  window.addEventListener('message', (event) => {
+    if (event.data?.type === 'set-url-input') {
+      urlInput.value = event.data.text;
+
+
+      urlInput.dispatchEvent(new KeyboardEvent('keydown', {
+        key: 'Enter',
+        bubbles: true
+      }));
+    }
+  });
+</script>
+
+
+</div>
+<script src="js/tabs.js"></script>
+<script src="example.js"></script>                                                                                                                      
+  </body>
+</html>
+ 
+                                                                                                   
