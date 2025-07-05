@@ -134,7 +134,7 @@ transition: .5s;
 
 
     .tab .close-btn {
-      margin-left: 88px;
+      margin-left: 55px;
       color: rgb(87, 87, 87);
       font-weight: bold;
       cursor: pointer;
@@ -214,6 +214,18 @@ transition: .5s;
     .url-row button {
       padding: 6px 10px;
       cursor: pointer;
+    }
+    .tab-title {
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tab-favicon {
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
     }
 
     iframe {
