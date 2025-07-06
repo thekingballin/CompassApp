@@ -118,7 +118,7 @@ transition: .5s;
       cursor: pointer;
       border-color: white;
       user-select: none;
-      border-color: rgba(203, 203, 203, 0.612);
+      border-color: var(--accent-color);
       border-style: solid;
       border-width: 1px;
       transition: .3s;
@@ -128,7 +128,7 @@ transition: .5s;
       background: #000000;
       color: white;
       border-width: 1px;
-      background: linear-gradient(90deg,rgb(94, 91, 91) 0%, rgba(61, 61, 61, 1) 50%, rgba(0, 0, 0, 1) 91%, rgba(0, 0, 0, 1) 98%, rgba(0, 0, 0, 1) 100%);
+      background: linear-gradient(90deg,var(--accent-color) 0%, var(--accent-color) 50%, rgba(0, 0, 0, 1) 91%, rgba(0, 0, 0, 1) 98%, rgba(0, 0, 0, 1) 100%);
     }
 
 
@@ -231,7 +231,7 @@ transition: .5s;
 
 
 #popupContent {
-  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.512);
   border-radius: 8px;
   padding: 20px;
   width: 700px;
@@ -281,7 +281,7 @@ transition: .5s;
 }
 
 .menu-sidebar {
-  background: #000000;
+  background-color: rgba(0, 0, 0, 0.512);;
   padding: 10px;
   width: 150px;
   display: flex;
@@ -322,7 +322,7 @@ margin-bottom: 30px;
 .menu-panel-content {
   flex-grow: 1;
   padding: 20px;
-  background: #000000;
+
 }
 
 .menu-page {
@@ -595,24 +595,23 @@ text-shadow: 7px 7px 7px black;
   margin-top: 30px; 
 }
 
-#searchInput {
-  background-color: #000000;
-  padding: 12px 20px;
-  width: 56%;
-  color: #ffffff;
-  border: 2px solid #d3d3d3;
-  border-radius: 14px;
-  transition: all 0.35s ease-in-out;
-  outline: none;
-  font-weight: 500;
-  font-size: 16px;
+    #searchInput {
+  background-color: black;
+  border: 2px solid var(--accent-color);
+  border-radius: 20px;
+  padding: 12px 40px 12px 16px; 
+  text-align: left; 
   font-family: 'Poppins', sans-serif;
+  outline: none;
+  width: 260px;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 40px 0 0 55px;
+  transition: all 0.3s ease;
+  font-size: 16px;
   position: relative;
-  border: 2px solid white;
- box-shadow: 0 0 8px rgba(255, 255, 255, 0.7); 
- filter: brightness(0.9);
-    animation: fadeInUp 0.3s ease forwards;
-  opacity: 0; 
+   animation: fadeInUp 1s ease forwards;
+  box-shadow: none;
 }
 
 #searchInput::placeholder {
@@ -1372,8 +1371,12 @@ filter: brightness(1);
   margin: 3px;
   border-width: 1px;
   border-style: solid;
-  border-color: #444444;
+  border-color: var(--accent-color);
 }
+
+
+
+
 
 #searchContainer {
 display: flex;
@@ -2057,34 +2060,9 @@ body.light #favorites:hover {
 }
 
 
- body.light #searchInput {
-background-color: #ffffff;
-padding: 12px 20px;
-width: 56%;
-color: #000000;
-border: 2px solid #000000;
-border-radius: 14px;
-transition: all 0.35s ease-in-out;
-outline: none;
-font-weight: 500;
-font-size: 16px;
-font-family: 'Poppins', sans-serif;
-position: relative;
-border: 2px solid rgb(0, 0, 0);
-box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
-filter: brightness(0.9);
-}
 
- body.light #searchInput::placeholder {
-color: #000000;
-font-weight: 400;
-}
 
- body.light #searchInput:hover,
- body.light #searchInput:focus {
-background-color: #ffffff;
-filter: brightness(1);
-}
+
 
 
   body.light  #categorySelect {
@@ -2490,6 +2468,62 @@ padding-top: 5px;
 margin: 0 auto;
 display: flex;
 justify-content: center;
+}
+
+.nvimg {
+  filter: var(--image-color);
+}
+
+.sideicon {
+    filter: var(--image-color);
+}
+
+
+
+
+:root {
+  --bg-color: rgb(0, 0, 0);
+  --text-color: rgb(255, 255, 255);
+  --accent-color: #2f2f2f;
+  --image-color: invert(29%) sepia(0%) saturate(210%) hue-rotate(149deg) brightness(95%) contrast(89%);
+}
+
+
+
+[data-theme="light"] {
+  --bg-color: #f4f1de;
+  --text-color: #454545;
+  --accent-color: #c1c1c1;
+  --image-color: brightness(100%)
+}
+
+
+[data-theme="purple"] {
+  --bg-color: #000000;
+  --text-color: #bc04ff;
+  --accent-color: #bb00ff;
+  --image-color: invert(0%) sepia(100%) saturate(1000000%) hue-rotate(240deg);
+}
+
+[data-theme="blue"] {
+  --bg-color: #000000;
+  --text-color: #0099ff;
+  --accent-color: #0099ff;
+  --image-color: invert(39%) sepia(99%) saturate(2466%) hue-rotate(184deg) brightness(106%) contrast(104%);
+}
+
+[data-theme="green"] {
+  --bg-color: #000000;
+  --text-color: #0dff00;
+  --accent-color: #0dff00;
+  --image-color: invert(70%) sepia(58%) saturate(5740%) hue-rotate(78deg) brightness(123%) contrast(1300%);
+}
+
+[data-theme="red"] {
+  --bg-color: #000000;
+  --text-color: #ff0000;
+  --accent-color: #ff0000;
+  --image-color: invert(22%) sepia(84%) saturate(7483%) hue-rotate(1deg) brightness(80%) contrast(1203%);
 }
 
 /* END OF THEMES*/
