@@ -70,7 +70,7 @@
       <img src="images/game.png" style="margin: 8px; cursor: pointer;"  onclick="submitData('https://compass-network.online/games.html')">
       <img src="images/bot.png" style="margin: 8px; cursor: pointer;"  onclick="alert('This feature is not available yet.')">
       <hr style="margin: 7px;">
-            <img src="images/settings.png" style="margin: 8px; cursor: pointer;"  onclick="alert('This feature is not available yet.')">
+      <img src="images/settings.png" style="margin: 8px; cursor: pointer;"  onclick="openPopup()">
     </div>
     <div class="browser">
       <div class="top-bar">
@@ -83,13 +83,74 @@
             <button  onclick="reloadTab()" style="background:none;"><img src="images/refresh.png" id="reload" class="nvimg" alt=""></button>
             <button onclick="goBack()" style="background:none;"><img src="images/left.png" class="nvimg" alt=""></button>
             <button onclick="goForward()"style="background:none;"><img src="images/right.png" class="nvimg" alt=""></button>
-            <input type="text" id="urlInput" placeholder="Type to search with google or enter web address">
+            <input type="text" id="urlInput" placeholder="Type to search or enter web address">
             <button id="searchButton" style="background:none;"><img src="images/search.png" alt=""></button>
         </div>
       </div>
       <div id="iframeContainer" style="height: 90vh; position: relative;"></div>
     </div>
 </div>
+<div id="popupOverlay" style="display: none;">
+  <div id="popupContent">
+    <div class="popup-header">
+      <h2>Settings</h2>
+      <button id="closePopupBtn"><img src="images/x.png" width="20px" alt=""></button>
+    </div>
+
+    <div class="popup-body">
+      <div class="menu-sidebar">
+        <button onclick="showMenu(1)" class="menu-btn active">Appearance</button>
+        <button onclick="showMenu(2)" class="menu-btn">Proxy</button>
+        <button onclick="showMenu(3)" class="menu-btn">Cloak</button>
+      </div>
+
+      <div class="menu-panel-content">
+        <div class="menu-page" id="menu1"><h2 style="margin: 0px;">Appearance</h2>
+
+        </div><!--↑ appearance-->
+        <div class="menu-page" id="menu2" style="display: none;"><h2 style="margin: 0px;">Proxy settings</h2>
+          <br>
+          <h3 style="font-size: 15px;margin: 0px;">Transport - The mode of communication between the client and server.</h3>
+          <select id="switcher">
+              <option value="epoxy">Epoxy</option>
+              <option value="bare">Bare</option>
+          </select>
+          <br>
+          <br>
+          <br>
+          <h3 style="font-size: 15px;margin: 0px;">Search engine - The program that searches the user input</h3>
+          <select id="search-engine">
+              <option value="ddg">Duckduckgo</option>
+              <option value="gogl">Google</option>
+              <option value="bing">Bing</option>
+              <option value="yhoo">Yahoo</option>
+          </select>
+        </div><!--↑ proxy-->
+        <div class="menu-page" id="menu3" style="display: none;"><h2 style="margin: 0px;">Cloak settings</h2>
+
+        </div><!--↑ cloak settings-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById("switcher").value = localStorage.getItem('transfer');
+  document.getElementById("search-engine").value = localStorage.getItem('search');
+  const selectElement = document.getElementById('switcher');
+  const selectElement1 = document.getElementById('search-engine');
+
+  selectElement.addEventListener('change', function() {
+    const selectedValue = this.value;
+    localStorage.setItem('transfer', selectedValue);
+  });
+    selectElement1.addEventListener('change', function() {
+    const selectedValue = this.value;
+    localStorage.setItem('search', selectedValue);
+  });
+});
+</script>
 
 
 

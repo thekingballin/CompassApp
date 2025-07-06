@@ -106,7 +106,7 @@ transition: .5s;
     .tab {
       display: flex;
       align-items: center;
-      background: #2d2d2d;
+      background: #101010;
       color: white;
       padding: 3px 0px;
       padding-left: 10px;
@@ -148,13 +148,7 @@ transition: .5s;
       background-color: rgba(56, 55, 55, 0.221);
     }
 
-    .settings {
-      position: fixed;
-      width: 50%;
-      height: 50%;
-      background: #000000;
-      z-index: 1;
-    }
+
 
     .tab:hover .close-btn {
       display: block;
@@ -221,6 +215,120 @@ transition: .5s;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
+#popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+
+#popupContent {
+  background: rgb(0, 0, 0);
+  border-radius: 8px;
+  padding: 20px;
+  width: 700px;
+  max-width: 95%;
+  max-height: 90%;
+  overflow: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(34, 34, 34, 0.612);
+}
+
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+#closePopupBtn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  border-radius: 0px;
+  filter: invert(100%);
+}
+
+#closePopupBtn:hover {
+  background-color: #999797;
+  color: #FFFFFF;
+}
+
+.popup-body {
+  display: flex;
+  margin-top: 20px;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.menu-sidebar {
+  background: #000000;
+  padding: 10px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: 1px solid #464646;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  height: 40px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 14px;
+  transition: background 0.2s;
+}
+
+.menu-btn p {
+margin: 0px;
+display: inline;
+margin-bottom: 30px;
+}
+
+.menu-btn:hover {
+  background: #2a2a2a;
+  color: #FFFFFF;
+}
+
+.menu-btn.active {
+  background: #464646;
+  pointer-events: none;
+}
+
+.menu-panel-content {
+  flex-grow: 1;
+  padding: 20px;
+  background: #000000;
+}
+
+.menu-page {
+  display: none;
+}
+
 
     .tab-favicon {
       width: 16px;
@@ -1259,7 +1367,7 @@ filter: brightness(1);
 .side-menu {
   width: 40px;
   height: 99%;
-  background: #1c1c1c;
+  background: #070707;
   border-radius: 15px;
   margin: 3px;
   border-width: 1px;

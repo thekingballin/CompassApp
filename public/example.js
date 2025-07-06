@@ -14,7 +14,26 @@ document.getElementById("searchButton").onclick = async function (event) {
     event.preventDefault();
 
     let url = document.getElementById("urlInput").value; // if no periods are detected in the input, search google instead
-    let searchUrl = "https://www.google.com/search?q=";
+    let searchUrl = "https://duckduckgo.com/?q=";
+
+
+
+    const storedValue = localStorage.getItem('search');
+
+    if (storedValue === null) {
+    } else {
+    if (storedValue === "gogl") {
+    searchUrl = "https://www.google.com/search?q=";
+    } else if (storedValue === "bing") {
+    searchUrl = "https://www.bing.com/search?q=";
+    } else if (storedValue === "yhoo") {
+    searchUrl = "https://search.yahoo.com/search?p=";
+    } else {
+
+    searchUrl = "https://duckduckgo.com/?q=";
+    }
+    }
+    
 
     if (!url.includes(".")) {
         url = searchUrl + encodeURIComponent(url);

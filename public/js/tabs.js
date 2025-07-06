@@ -166,6 +166,35 @@
     }
   });
 
+  function openPopup() {
+  document.getElementById('popupOverlay').style.display = 'flex';
+}
+
+function closePopup() {
+  document.getElementById('popupOverlay').style.display = 'none';
+}
+
+document.getElementById('closePopupBtn').addEventListener('click', closePopup);
+
+
+function openPopup() {
+  document.getElementById('popupOverlay').style.display = 'flex';
+  showMenu(1);
+}
+
+function closePopup() {
+  document.getElementById('popupOverlay').style.display = 'none';
+}
+
+document.getElementById('closePopupBtn').addEventListener('click', closePopup);
+
+function showMenu(index) {
+  document.querySelectorAll('.menu-page').forEach(page => page.style.display = 'none');
+  document.getElementById(`menu${index}`).style.display = 'block';
+  document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.menu-btn')[index - 1].classList.add('active');
+}
+
 
   addTab();
 
