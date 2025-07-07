@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <link rel="icon" href="images/chat.png">
+  <style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    padding: 20px;
+  }
+  #messages {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  #messages li {
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 2px solid #3c3c3c;
+    background: #000000;
+    outline: none;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+  #form {
+    display: flex;
+  }
+  #input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #000000;
+    color:#f1f1f1;
+    border: 2px solid #3c3c3c;
+  }
+  button {
+    padding: 10px;
+    border: none;
+    background: #000000;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+  }
+  strong {
+    color: #333;
+  }
+h3, p, h2 {
+    color: #f1f1f1;
+}
+
+body {
+    color: #f1f1f1;
+}
+</style>
+
+</head>
+<body>
+    <div style="color: #f1f1f1; margin-bottom: 15px; font-weight: bold;">Online users: <span id="userCount">0</span></div>
+  <ul id="messages"></ul>
+  <form id="form">
+    <input id="input" placeholder="Send a message..." autocomplete="off"/><button><img src="images/send.png" alt=""></button>
+  </form>
+
+  <p style="color: rgb(255, 255, 255); font-weight: bold; margin-bottom: 10px;"><b>⚠️ By using this chat, you agree not to post illegal, harmful, or abusive content. 
+  All activity may be logged and reported to relevant authorities if necessary.</b></p>
+  <h2>Chat rules</h2>
+  <h3>1. Be respectful</h3>
+  <p>Treat others with kindness and courtesy.</p>
+  <p>No bullying, harassment, or targeted abuse.</p>
+  <h3>2. No Illegal Content</h3>
+  <p>No drug discussions, sales, or promotion</p>
+  <p>No weapons, violence, or threats</p>
+  <p>No sharing or discussing illegal activities</p>
+  <p>All chat logs are stored and may be reported to authorities if necessary.</p>
+  <h3>3. No Hate Speech</h3>
+  <p>Absolutely no racism, sexism, homophobia, or hate of any kind.</p>
+  <p>Slurs and offensive language are not tolerated.</p>
+  <h3>4. Keep It Clean</h3>
+  <p>No explicit or NSFW content (sexual, violent, or graphic).</p>
+  <p>This chat is meant to be safe and appropriate for all users.</p>
+  <h3>5. No Spamming or Flooding</h3>
+  <p>Don’t send repetitive messages or walls of text.</p>
+  <p>No advertising or self-promotion.</p>
+  <h3>6. Use an Appropriate Nickname</h3>
+  <p>Do not impersonate others.</p>
+  <p>No offensive, misleading, or vulgar nicknames.</p>
+  <h3>Respect Privacy</h3>
+  <p>Do not share personal info (yours or others): full names, addresses, phone numbers, passwords, etc.</p>
+  <p>Do not ask others for private details.</p>
+  <h3>⚠️ All messages are logged. If you engage in illegal activity, your information may be shared with law enforcement. Use this chat responsibly.</h3>
+<script>
+  const socket = io();
+
+let nickname = "";
+function askNickname() {
+  nickname = prompt("Enter a unique nickname:");
+  if (!nickname) {
+    askNickname();
+    return;
+  }
+
+  socket.emit("set nickname", nickname, (response) => {
+    if (!response.success) {
+      alert(response.message);
+      askNickname();
+    }
+  });
+}
+askNickname();
+
+
+  const form = document.getElementById('form');
+  const input = document.getElementById('input');
+  const messages = document.getElementById('messages');
+
+    form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (input.value) {
+    if (input.value.length > 300) {
+      alert("The message you have entered is too long. Maximum character limit: 300.");
+      return;
+    }
+    socket.emit('chat message', {
+      name: nickname,
+      text: input.value
+    });
+    input.value = '';
+  }
+});
+
+
+
+    socket.on("chat log", function(log) {
+  messages.innerHTML = "";
+  log.forEach((msg) => {
+    const item = document.createElement('li');
+    const time = new Date(msg.time).toLocaleTimeString();
+    item.innerHTML = `<span style="color:gray;">[${time}]</span> <strong>[${msg.name}]:</strong> ${msg.text}`;
+    messages.appendChild(item);
+  });
+});
+
+  socket.on("chat log", function(log) {
+  messages.innerHTML = "";
+  log.forEach((msg) => {
+    const item = document.createElement('li');
+    const time = new Date(msg.time).toLocaleTimeString();
+    item.innerHTML = `<span style="color:gray;">[${time}]</span> <strong>[${msg.name}]:</strong> ${msg.text}`;
+    messages.appendChild(item);
+  });
+});
+
+  socket.on('chat message', function(msg) {
+  const item = document.createElement('li');
+  const time = new Date(msg.time).toLocaleTimeString();
+  item.innerHTML = `<span style="color:gray;">[${time}]</span> <strong>[${msg.name}]:</strong> ${msg.text}`;
+  messages.appendChild(item);
+  messages.scrollTop = messages.scrollHeight;
+});
+
+const userCountSpan = document.getElementById("userCount");
+
+socket.on("active users", (count) => {
+  userCountSpan.textContent = count;
+});
+
+
+  
+</script>
+
+</body>
+</html>
