@@ -1,5 +1,5 @@
 # CompassApp
-Node server app for compass network
+The new version of Compass!
 
 Build command : npm i
 
