@@ -214,6 +214,11 @@ transition: .5s;
     .nvimg {
       width: 10px;
       transform: scale(2);
+      transition: .3s;
+    }
+
+    .nvimg:hover {
+    transform: scale(2.5);
     }
 
     .url-row button {
@@ -711,9 +716,8 @@ padding: 60px;
   background-size: cover;
   position: absolute;
   bottom: 0;
-  left: 0;
-  padding-left: 20px;
-  padding-bottom: 10px;
+  left: 10px;
+  padding-bottom: 20px;
 }
 
 .footer-icon {
@@ -2490,6 +2494,11 @@ justify-content: center;
 
 .sideicon {
     filter: var(--image-color);
+    transition: .3s;
+}
+
+.sideicon:hover {
+  transform: scale(1.2);
 }
 
 

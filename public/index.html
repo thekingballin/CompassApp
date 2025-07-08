@@ -66,11 +66,11 @@
 
 <div class="app">
     <div class="side-menu">
-      <img src="images/logo1.png" style="margin: 5px;" width="30px" alt="" class="sideicon">
+      <img src="images/logo1.png" style="margin: 5px; pointer-events: none;" width="30px" alt="" class="sideicon">
       <img src="images/game.png" style="margin: 8px; cursor: pointer;" class="sideicon" onclick="submitData('https://compass-network.online/games.html')">
       <img src="images/bot.png" style="margin: 8px; cursor: pointer;" class="sideicon" onclick="alert('This feature is not available yet.')">
       <img src="images/chat.png" style="margin: 8px; cursor: pointer;" class="sideicon" onclick="addTab(url = 'chat.html')">
-      <hr style="margin: 7px;" class="sideicon" >
+      <hr style="margin: 7px; pointer-events: none;" class="sideicon" >
       <img src="images/settings.png" style="margin: 8px; cursor: pointer;"  onclick="openPopup()" class="sideicon">
     </div>
     <div class="browser">
@@ -97,16 +97,15 @@
       <h2>Settings</h2>
       <button id="closePopupBtn"><img src="images/x.png" width="20px" alt=""></button>
     </div>
-
     <div class="popup-body">
       <div class="menu-sidebar">
         <button onclick="showMenu(1)" class="menu-btn active">Appearance</button>
         <button onclick="showMenu(2)" class="menu-btn">Proxy</button>
         <button onclick="showMenu(3)" class="menu-btn">Cloak</button>
       </div>
-
       <div class="menu-panel-content">
         <div class="menu-page" id="menu1"><h2 style="margin: 0px;">Appearance</h2>
+          <h3 style="font-size: 15px;margin: 0px;">Accent Color</h3>
           <select id="themeSelector">
               <option value="dark">Black</option>
               <option value="light">White</option>
@@ -115,7 +114,6 @@
               <option value="green">Green</option>
               <option value="red">Red</option>
           </select>
-
         </div><!--↑ appearance-->
         <div class="menu-page" id="menu2" style="display: none;"><h2 style="margin: 0px;">Proxy settings</h2>
           <br>
@@ -136,7 +134,13 @@
           </select>
         </div><!--↑ proxy-->
         <div class="menu-page" id="menu3" style="display: none;"><h2 style="margin: 0px;">Cloak settings</h2>
-
+          <div class="preset">
+            <button onclick="applyPreset('Google')">Google</button>
+            <button onclick="applyPreset('Google Classroom')">Google Classroom</button>
+            <button onclick="applyPreset('YouTube')">YouTube</button>
+            <button onclick="applyPreset('Schoology')">Schoology</button>
+            <button onclick="resetTab()">Reset</button>
+          </div>
         </div><!--↑ cloak settings-->
       </div>
     </div>
@@ -211,6 +215,58 @@ document.addEventListener('DOMContentLoaded', function() {
       }));
     }
   });
+</script>
+<script>
+    const presets = {
+      "Google": {
+        title: "Google",
+        favicon: "images/cloaks/google.ico"
+      },
+      "Google Classroom": {
+        title: "Classes",
+        favicon: "images/cloaks/classroom.png"
+      },
+      "YouTube": {
+        title: "YouTube",
+        favicon: "images/cloaks/utube.ico"
+      },
+      "Schoology": {
+        title: "Home | Schoology",
+        favicon: "images/cloaks/powerschool.png"
+      }
+    };
+
+    function applyPreset(name) {
+      const preset = presets[name];
+      if (preset) {
+        document.title = preset.title;
+
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'icon';
+          document.head.appendChild(link);
+        }
+        link.href = preset.favicon;
+      }
+
+      localStorage.setItem("tabCloak", JSON.stringify(preset));
+    }
+
+    function resetTab() {
+      document.title = 'Compass - Browser';
+      document.querySelector("link[rel~='icon']").href = 'images/logo1.png';
+      localStorage.removeItem("tabCloak");
+    }
+
+      window.addEventListener("DOMContentLoaded", () => {
+      const saved = localStorage.getItem("tabCloak");
+      if (saved) {
+        const preset = JSON.parse(saved);
+        document.title = preset.title;
+        document.querySelector("link[rel~='icon']").href = preset.favicon;
+      }
+    });
 </script>
 
 
