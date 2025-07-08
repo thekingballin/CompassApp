@@ -16,6 +16,30 @@
           padding: 0;
           height: 100vh;
           overflow: auto;
+          background-image: url(images/bg6.png.png);
+        }
+        #searchInput {
+          background-color: #000000;
+          padding: 12px 20px;
+          width: 56%;
+          color: #ffffff;
+          border: 2px solid #d3d3d3;
+          border-radius: 14px;
+          transition: all 0.35s ease-in-out;
+          outline: none;
+          font-weight: 500;
+          margin: 0px 0 0 0px;
+          font-size: 16px;
+          font-family: 'Poppins', sans-serif;
+          position: relative;
+          border: 2px solid white;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.7); 
+        filter: brightness(0.9);
+            animation: fadeInUp 0.3s ease forwards;
+          opacity: 0; 
+        }
+        #searchInput:focus {
+          width: 56%;
         }
 
         ::-webkit-scrollbar {
@@ -41,10 +65,10 @@
           font-family: sans-serif;
           padding-top: 20%;
         }
+
+        
       </style>
 </script>
-
-
 </div>
     <script src="js/search.js"></script>
     <div id="searchContainer">
@@ -79,6 +103,5 @@
         </div>       
     </script>
 </div>
-
 </body>
 </html>
