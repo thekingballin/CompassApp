@@ -15,6 +15,8 @@
 
 
 
+
+
 html {
 overflow-y: scroll;
 scroll-behavior: smooth;
@@ -71,7 +73,7 @@ transition: .5s;
 }
 
 #urlInput {
-  border: 1px solid var(--accent-color);
+  border: solid var(--accent-color);
   height: 25px;
   border-radius:10px;
   outline: none;
@@ -90,6 +92,7 @@ transition: .5s;
       display: flex;
       flex-direction: column;
       background: #000000;
+      overflow: visible;
       color: white;
       padding: 0;
     }
@@ -106,6 +109,11 @@ transition: .5s;
       align-items: center;
       flex: 1;
       overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .tab-bar::-webkit-scrollbar {
+      display: none;
     }
 
     #searchInput:focus {
@@ -119,7 +127,7 @@ transition: .5s;
       color: white;
       padding: 3px 0px;
       padding-left: 10px;
-      width: 150px;
+      width: 0px;
       height: 30px;
       margin-right: 4px;
       margin-bottom: 2px;
@@ -130,16 +138,32 @@ transition: .5s;
       user-select: none;
       border-color: var(--accent-color);
       border-style: solid;
-      border-width: 1px;
-      transition: .3s;
+      transition: width 0.3s ease, opacity 0.3s ease, background-color 0.2s ease;
+      
+    }
+    .tab.pre-show {
+     width: 0;
+     opacity: 0;
+     overflow: hidden;
+    }
+
+    .tab.show {
+      width: 150px;
+    }
+
+    .tab:hover {
+      width: 150px;
+      background-color: #313131;
+      
     }
 
     .tab.active {
       background: #000000;
       color: white;
         box-shadow: 0 0px 10px 1px var(--accent-color);
-      border-width: 1px;
-      background: linear-gradient(90deg,var(--accent-color) 0%, var(--accent-color) 50%, rgba(0, 0, 0, 1) 91%, rgba(0, 0, 0, 1) 98%, rgba(0, 0, 0, 1) 100%);
+
+      border-color: var(--accent-color);
+      background-color: #313131;
     }
 
 
@@ -181,6 +205,8 @@ transition: .5s;
     .add-tab:hover img {
       filter: invert(100%);
     }
+
+
 
 
 
@@ -241,10 +267,16 @@ transition: .5s;
   background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
+  pointer-events: none;
+  opacity: 0;
   align-items: center;
+  transition: opacity 0.3s ease;
   z-index: 9999;
 }
-
+#popupOverlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 #popupContent {
   background: rgba(0, 0, 0, 0.512);
@@ -252,11 +284,12 @@ transition: .5s;
   padding: 20px;
   width: 700px;
   max-width: 95%;
-  max-height: 90%;
+  height: 60%;
   overflow: auto;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   border-style: solid;
   border-width: 1px;
+  transition: height .3s ease;
   border-color: rgba(34, 34, 34, 0.612);
 }
 
@@ -1364,11 +1397,10 @@ filter: brightness(1);
 .side-menu {
   width: 40px;
   height: 99%;
-  overflow: hidden;
+  overflow: visible;
   background: #070707;
   border-radius: 7px;
   margin: 3px;
-  border-width: 1px;
   border-style: solid;
   border-color: var(--accent-color);
 }

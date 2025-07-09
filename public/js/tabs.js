@@ -20,6 +20,7 @@
 
     const tab = document.createElement('div');
     tab.className = 'tab';
+    tab.classList.add('pre-show');
     tab.dataset.id = tabId;
     const favicon = document.createElement('img');
     favicon.className = 'tab-favicon';
@@ -45,6 +46,10 @@
 
     const addBtn = tabBar.querySelector('.add-tab');
     tabBar.insertBefore(tab, addBtn);
+    requestAnimationFrame(() => {
+    tab.classList.remove('pre-show');
+    tab.classList.add('show');
+    });
 
 
     const iframe = document.createElement('iframe');
@@ -60,11 +65,12 @@
 
     iframe.onload = () => {
       const currentTab = tabs.find(t => t.id === tabId);
+      
       if (!currentTab) return;
 
       const docTitle = (() => {
         try {
-          return iframe.contentDocument?.title || 'Untitled';
+          return iframe.contentDocument?.title || 'Untitled'; 
         } catch {
           return new URL(iframe.src).hostname;
         }
@@ -91,6 +97,8 @@
     switchTab(tabId);
   }
 
+  
+
   function switchTab(tabId) {
     tabs.forEach(({ id, tabElement, iframe }) => {
       const isActive = id === tabId;
@@ -110,7 +118,14 @@
     if (index === -1) return;
 
     const { tabElement, iframe } = tabs[index];
-    tabElement.remove();
+    tabElement.classList.toggle('show');
+    tabElement.style.width = '0px'; 
+      tabElement.addEventListener('transitionend', function handleTransitionEnd(e) {
+    if (e.propertyName === 'width') {
+      tabElement.removeEventListener('transitionend', handleTransitionEnd);
+      tabElement.remove();
+    }
+  });
     iframe.remove();
     tabs.splice(index, 1);
 
@@ -166,24 +181,15 @@
     }
   });
 
-  function openPopup() {
-  document.getElementById('popupOverlay').style.display = 'flex';
-}
-
-function closePopup() {
-  document.getElementById('popupOverlay').style.display = 'none';
-}
-
-document.getElementById('closePopupBtn').addEventListener('click', closePopup);
 
 
 function openPopup() {
-  document.getElementById('popupOverlay').style.display = 'flex';
+  document.getElementById('popupOverlay').classList.toggle('show')
   showMenu(1);
 }
 
 function closePopup() {
-  document.getElementById('popupOverlay').style.display = 'none';
+  document.getElementById('popupOverlay').classList.toggle('show')
 }
 
 document.getElementById('closePopupBtn').addEventListener('click', closePopup);
