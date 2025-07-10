@@ -131,8 +131,8 @@ server.on("upgrade", (req, socket, head) => {
 let port = parseInt(process.env.PORT || "");
 if (isNaN(port)) port = 8080;
 
-server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+server.listen(port, '0.0.0.0', () => {
+  console.log(`Listening on port ${port} on all interfaces.`);
 });
 
 process.on("SIGINT", shutdown);
