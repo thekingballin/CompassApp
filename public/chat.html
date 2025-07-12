@@ -8,6 +8,7 @@
   body {
     font-family: 'Montserrat', sans-serif;
     padding: 20px;
+    background-color: #000000;
   }
   #messages {
     list-style: none;
@@ -29,7 +30,7 @@
   #form {
     display: flex;
   }
-  #input {
+  input {
     flex: 1;
     padding: 10px;
     border-radius: 15px;
@@ -55,6 +56,90 @@ h3, p, h2 {
 body {
     color: #f1f1f1;
 }
+
+#popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+#popupOverlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup-body {
+  display: flex;
+  margin-top: 20px;
+  border: 2px solid #313030;
+  background-color: #000000;
+  border-radius: 6px;;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.popup-body::-webkit-scrollbar {
+      display: none;
+}
+
+
+
+.menu-btn {
+  background: none;
+  border: none;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  height: 40px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 14px;
+  transition: background 0.2s;
+}
+
+.menu-btn p {
+margin: 0px;
+display: inline;
+margin-bottom: 30px;
+}
+
+
+
+.menu-panel-content {
+  flex-grow: 1;
+  padding: 20px;
+
+}
+
+.menu-page {
+  display: none;
+
+}
+#closePopupBtn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 0;
+  line-height: 1;
+  border-radius: 0px;
+  filter: invert(100%);
+}
+
+#closePopupBtn:hover {
+  background-color: #999797;
+  color: #FFFFFF;
+}
 </style>
 
 </head>
@@ -67,50 +152,110 @@ body {
 
   <p style="color: rgb(255, 255, 255); font-weight: bold; margin-bottom: 10px;"><b>⚠️ By using this chat, you agree not to post illegal, harmful, or abusive content. 
   All activity may be logged and reported to relevant authorities if necessary.</b></p>
-  <h2>Chat rules</h2>
-  <h3>1. Be respectful</h3>
-  <p>Treat others with kindness and courtesy.</p>
-  <p>No bullying, harassment, or targeted abuse.</p>
-  <h3>2. No Illegal Content</h3>
-  <p>No drug discussions, sales, or promotion</p>
-  <p>No weapons, violence, or threats</p>
-  <p>No sharing or discussing illegal activities</p>
-  <p>All chat logs are stored and may be reported to authorities if necessary.</p>
-  <h3>3. No Hate Speech</h3>
-  <p>Absolutely no racism, sexism, homophobia, or hate of any kind.</p>
-  <p>Slurs and offensive language are not tolerated.</p>
-  <h3>4. Keep It Clean</h3>
-  <p>No explicit or NSFW content (sexual, violent, or graphic).</p>
-  <p>This chat is meant to be safe and appropriate for all users.</p>
-  <h3>5. No Spamming or Flooding</h3>
-  <p>Don’t send repetitive messages or walls of text.</p>
-  <p>No advertising or self-promotion.</p>
-  <h3>6. Use an Appropriate Nickname</h3>
-  <p>Do not impersonate others.</p>
-  <p>No offensive, misleading, or vulgar nicknames.</p>
-  <h3>Respect Privacy</h3>
-  <p>Do not share personal info (yours or others): full names, addresses, phone numbers, passwords, etc.</p>
-  <p>Do not ask others for private details.</p>
-  <h3>⚠️ All messages are logged. If you engage in illegal activity, your information may be shared with law enforcement. Use this chat responsibly.</h3>
+<div id="popupOverlay">
+  <div id="popupContent">
+    <div class="popup-header">
+
+    </div>
+    <div class="popup-body">
+      <div class="menu-sidebar">
+      </div>
+      <div class="menu-panel-content">
+              <button id="closePopupBtn"><img src="images/x.png" width="20px" alt=""></button>
+        <div class="menu-page" id="menu1"><h2 style="margin: 0px;"></h2>
+            <input type="text" id="nickname" style="width: 70%;" placeholder="Enter a unique nickname">
+            <button id="submitNickname">Set Nickname</button>
+            <p style="color: #ff0000;" id="message"></p>
+            <br>
+            <p style="display: inline;">By talking in this chat, you agree to follow all <p style="display: inline; text-decoration: underline; cursor: pointer;" onclick="showMenu(2)">rules and regulations.</p></p>
+        </div><!--↑ nickname-->
+        <div class="menu-page" id="menu2" style="display: none; height: 300px;"><h2 style="margin: 0px;"></h2>
+          <p style="display: inline; text-decoration: underline; cursor: pointer;" onclick="showMenu(1)">← Go back</p>
+          <h2>Chat rules</h2>
+          <h3>1. Be respectful</h3>
+          <p>Treat others with kindness and courtesy.</p>
+          <p>No bullying, harassment, or targeted abuse.</p>
+          <h3>2. No Illegal Content</h3>
+          <p>No drug discussions, sales, or promotion</p>
+          <p>No weapons, violence, or threats</p>
+          <p>No sharing or discussing illegal activities</p>
+          <p>All chat logs are stored and may be reported to authorities if necessary.</p>
+          <h3>3. No Hate Speech</h3>
+          <p>Absolutely no racism, sexism, homophobia, or hate of any kind.</p>
+          <p>Slurs and offensive language are not tolerated.</p>
+          <h3>4. Keep It Clean</h3>
+          <p>No explicit or NSFW content (sexual, violent, or graphic).</p>
+          <p>This chat is meant to be safe and appropriate for all users.</p>
+          <h3>5. No Spamming or Flooding</h3>
+          <p>Don't send repetitive messages or walls of text.</p>
+          <p>No advertising or self-promotion.</p>
+          <h3>6. Use an Appropriate Nickname</h3>
+          <p>Do not impersonate others.</p>
+          <p>No offensive, misleading, or vulgar nicknames.</p>
+          <h3>Respect Privacy</h3>
+          <p>Do not share personal info (yours or others): full names, addresses, phone numbers, passwords, etc.</p>
+          <p>Do not ask others for private details.</p>
+          <h3>⚠️ All messages are logged. If you engage in illegal activity, your information may be shared with law enforcement. Use this chat responsibly.</h3>
+        </div><!--↑ rules-->
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-  const socket = io();
+  function openPopup() {
+  document.getElementById('popupOverlay').classList.toggle('show')
+  showMenu(1);
+}
+
+function closePopup() {
+document.getElementById("message").textContent = 'A nickname is required';
+}
+
+document.getElementById('closePopupBtn').addEventListener('click', closePopup);
+
+function showMenu(index) {
+  document.querySelectorAll('.menu-page').forEach(page => page.style.display = 'none');
+  document.getElementById(`menu${index}`).style.display = 'block';
+  document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.menu-btn')[index - 1].classList.add('active');
+}
+
+
+openPopup()
+
+</script>
+<script>
+const socket = io();
 
 let nickname = "";
-function askNickname() {
-  nickname = prompt("Enter a unique nickname:");
-  if (!nickname) {
-    askNickname();
-    return;
-  }
+const nicknameInput = document.getElementById("nickname");
+const submitButton = document.getElementById("submitNickname");
+const messageDisplay = document.getElementById("message"); 
 
-  socket.emit("set nickname", nickname, (response) => {
-    if (!response.success) {
-      alert(response.message);
-      askNickname();
+function nicknameIput() {
+    nickname = nicknameInput.value.trim();
+
+    if (!nickname) {
+        messageDisplay.textContent = "Nickname cannot be empty.";
+
+        nicknameInput.focus();
+        return; 
+        
     }
-  });
+  socket.emit("set nickname", nickname, (response) => {
+     if (!response.success) {
+    messageDisplay.textContent = response.message;
+    } else {document.getElementById('popupOverlay').classList.toggle('show')}
+   });
+   
 }
-askNickname();
+    submitButton.addEventListener("click", nicknameIput);
+    nicknameInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            nicknameIput();
+        }
+    });
+
 
 
   const form = document.getElementById('form');
