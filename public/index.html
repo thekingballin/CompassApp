@@ -125,6 +125,10 @@
               <option value="red">Red</option>
               <option value="RGB">RGB</option>
           </select>
+          <div id="rgbspeed">
+            <label for="speedslider">RGB Speed:</label>
+            <input type="range" id="speedslider" min="10" max="200" step="10" value="50">
+          </div>
         </div><!--↑ appearance-->
         <div class="menu-page" id="menu2" style="display: none;"><h2 style="margin: 0px;">Proxy settings</h2>
           <br>
@@ -183,8 +187,11 @@ function notification(text) {
     localStorage.setItem('theme', selected);
     if (localStorage.getItem('theme') === 'RGB') {
       startRGB();
+      document.getElementById('rgbspeed').style.display = 'block';
     } else {
       stopRGB();
+      document.getElementById('rgbspeed').style.display = 'none';
+      element.style.setProperty('--accent-color', 'unset');
     }
   });
 </script>
@@ -212,29 +219,39 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 let hue = 0;
 let rgbInterval;
+let speed = 50;
 
-if (localStorage.getItem('theme') === 'RGB') {
-  startRGB();
-} else {
-  stopRGB();
-}
-
-function startRGB() {
-  if (rgbInterval) return; // don’t start multiple loops
-
+document.getElementById('speedslider').addEventListener('input', function(event) {
+  speed = document.getElementById('speedslider').value
+  restartRGB()
+});
+function restartRGB() {
+  if (rgbInterval) clearInterval(rgbInterval);
   rgbInterval = setInterval(() => {
     hue = (hue + 1) % 360;
     document.documentElement.style.setProperty('--accent-color', `hsl(${hue}, 100%, 50%)`);
-  }, 50); // speed: lower is faster
+  }, speed);
+}
+function startRGB() {
+  if (rgbInterval) return; // don’t start multiple loops
+  rgbInterval = setInterval(() => {
+    hue = (hue + 1) % 360;
+    document.documentElement.style.setProperty('--accent-color', `hsl(${hue}, 100%, 50%)`);
+  }, speed); // speed: lower is faster 
 }
 
 function stopRGB() {
   clearInterval(rgbInterval);
   rgbInterval = null;
 }
+
+if (localStorage.getItem('theme') === 'RGB') {
+  startRGB();
+} else {
+  stopRGB();
+  document.getElementById('rgbspeed').style.display = 'none';
+}
 </script>
-
-
 <script>
     function submitData(data) {
     const input = document.getElementById('urlInput');
