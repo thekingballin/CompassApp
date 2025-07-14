@@ -378,6 +378,29 @@ margin-bottom: 30px;
   display: none;
 }
 
+.notification {
+  position: fixed;
+  min-width: 30%;
+  z-index: 10000;
+  background-color: #000;
+  margin-left: 35%;
+  margin-right: 35%;
+  margin-top: 20px;
+  border-radius: 15px;
+  border: 2px solid var(--accent-color);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.5s ease-in, opacity 0.5s ease-in;
+  transform: translateY(-200px);
+  text-align: center;
+  padding: 20px;
+}
+
+.notification.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0px);
+}
 
     .tab-favicon {
       width: 16px;
@@ -403,6 +426,8 @@ transform: translateY(3px);
 h3 {
 font-weight: 200;
 }
+
+
 
 .credit-row {
   display: flex;
@@ -2580,6 +2605,13 @@ justify-content: center;
   --text-color: #ff0000;
   --accent-color: #ff0000;
   --image-color: invert(22%) sepia(84%) saturate(7483%) hue-rotate(1deg) brightness(80%) contrast(1203%);
+}
+
+[data-theme="RGB"] {
+  --bg-color: #000000;
+  --text-color: #ff0000;
+  --accent-color: hsl(0, 100%, 50%);
+  --image-color: invert(29%) sepia(0%) saturate(210%) hue-rotate(149deg) brightness(95%) contrast(89%);
 }
 
 /* END OF THEMES*/

@@ -73,6 +73,7 @@
 
 <!--to make a button that directs to a link use onclick="submitdata('https://url.url')"-->
 
+<div id="notification" class="notification"></div>
 <div class="app">
     <div class="side-menu">
       <img src="images/logo1.png" style="margin: 5px; pointer-events: none;" width="30px" alt="" class="sideicon">
@@ -122,6 +123,7 @@
               <option value="blue">Blue</option>
               <option value="green">Green</option>
               <option value="red">Red</option>
+              <option value="RGB">RGB</option>
           </select>
         </div><!--↑ appearance-->
         <div class="menu-page" id="menu2" style="display: none;"><h2 style="margin: 0px;">Proxy settings</h2>
@@ -143,18 +145,30 @@
           </select>
         </div><!--↑ proxy-->
         <div class="menu-page" id="menu3" style="display: none;"><h2 style="margin: 0px;">Cloak settings</h2>
+        <h3 style="font-size: 15px;margin: 0px;">Tab cloak</h3>
           <div class="preset">
-            <button onclick="applyPreset('Google')">Google</button>
-            <button onclick="applyPreset('Google Classroom')">Google Classroom</button>
-            <button onclick="applyPreset('YouTube')">YouTube</button>
-            <button onclick="applyPreset('Schoology')">Schoology</button>
-            <button onclick="resetTab()">Reset</button>
+            <button onclick="applyPreset('Google'); notification('Changed cloak to Google!')">Google</button>
+            <button onclick="applyPreset('Google Classroom'); notification('Changed cloak to Google Classroom!')">Google Classroom</button>
+            <button onclick="applyPreset('YouTube'); notification('Changed cloak to Youtube!')">YouTube</button>
+            <button onclick="applyPreset('Schoology'); notification('Changed cloak to Schoology!')">Schoology</button>
+            <button onclick="resetTab(); notification('Reset cloak!')">Reset</button>
           </div>
         </div><!--↑ cloak settings-->
       </div>
     </div>
   </div>
 </div>
+<script> 
+function notification(text) {
+  const not = document.getElementById('notification');
+  console.log('new notification:', text);
+  not.textContent = text;
+  not.classList.add('show');
+  setTimeout(() => {
+    not.classList.remove('show');
+  }, 3000);
+}
+</script>
 <script>
   const selector = document.getElementById('themeSelector');
 
@@ -163,15 +177,17 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
     selector.value = savedTheme;
   }
-
   selector.addEventListener('change', () => {
     const selected = selector.value;
     document.documentElement.setAttribute('data-theme', selected);
     localStorage.setItem('theme', selected);
+    if (localStorage.getItem('theme') === 'RGB') {
+      startRGB();
+    } else {
+      stopRGB();
+    }
   });
 </script>
-
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById("switcher").value = localStorage.getItem('transfer');
@@ -181,15 +197,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
   selectElement.addEventListener('change', function() {
     const selectedValue = this.value;
+    notification('Changed transport to: ' + selectedValue)
     localStorage.setItem('transfer', selectedValue);
   });
     selectElement1.addEventListener('change', function() {
     const selectedValue = this.value;
+    notification('Changed search engine to: ' + selectedValue)
     localStorage.setItem('search', selectedValue);
   });
-});
-</script>
 
+});
+
+</script>
+<script>
+let hue = 0;
+let rgbInterval;
+
+if (localStorage.getItem('theme') === 'RGB') {
+  startRGB();
+} else {
+  stopRGB();
+}
+
+function startRGB() {
+  if (rgbInterval) return; // don’t start multiple loops
+
+  rgbInterval = setInterval(() => {
+    hue = (hue + 1) % 360;
+    document.documentElement.style.setProperty('--accent-color', `hsl(${hue}, 100%, 50%)`);
+  }, 50); // speed: lower is faster
+}
+
+function stopRGB() {
+  clearInterval(rgbInterval);
+  rgbInterval = null;
+}
+</script>
 
 
 <script>
