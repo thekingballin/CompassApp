@@ -18,7 +18,7 @@
     border: 1px solid #ccc;
     margin-bottom: 10px;
     
-    /* custom scrollbar for chat */
+    /*scrollbar for chat */
     scrollbar-width: thin;  
     scrollbar-color: #ffffff transparent;
   }
@@ -121,13 +121,13 @@ margin-bottom: 30px;
 .menu-panel-content {
   flex-grow: 1;
   padding: 20px;
-
 }
 
 .menu-page {
   display: none;
-
+  
 }
+
 #closePopupBtn {
   background: none;
   border: none;
@@ -171,35 +171,55 @@ margin-bottom: 30px;
             <button id="submitNickname">Set Nickname</button>
             <p style="color: #ff0000;" id="message"></p>
             <br>
-            <p style="display: inline;">By talking in this chat, you agree to follow all <p style="display: inline; text-decoration: underline; cursor: pointer;" onclick="showMenu(2)">rules and regulations.</p></p>
+            <p style="display: inline;">By talking in this chat, you have agreed to follow the <p style="display: inline; text-decoration: underline; cursor: pointer;" onclick="showMenu(2)">terms of use.</p></p>
         </div><!--↑ nickname-->
-        <div class="menu-page" id="menu2" style="display: none; height: 300px;"><h2 style="margin: 0px;"></h2>
+        <div class="menu-page" id="menu2" style="display: none; height: 350px; margin-left: 25px"><h2 style="margin: 0px;"></h2>
           <p style="display: inline; text-decoration: underline; cursor: pointer;" onclick="showMenu(1)">← Go back</p>
-          <h2>Chat rules</h2>
+          <h2>Chat Rules & Terms of Use</h2>
           <h3>1. Be respectful</h3>
-          <p>Treat others with kindness and courtesy.</p>
-          <p>No bullying, harassment, or targeted abuse.</p>
+          <p>Treat all users with kindness, dignity, and respect.</p>
+          <p>Discrimination or mistreatment based on race, gender, religion, nationality, disability, or personal beliefs is not allowed.</p>
+          <p>Avoid trolling or inappropriate behavior intended to provoke or disrupt others.</p>
+          <p style="margin-bottom: 50px;">Constructive discussion is welcome, but bullying, insults, threats, or personal attacks are not tolerated.</p>
+          
           <h3>2. No Illegal Content</h3>
-          <p>No drug discussions, sales, or promotion</p>
-          <p>No weapons, violence, or threats</p>
-          <p>No sharing or discussing illegal activities</p>
-          <p>All chat logs are stored and may be reported to authorities if necessary.</p>
+          <p>No drug discussions, sales, or promotion.</p>
+          <p>No mentions weapons, violence, or threats.</p>
+          <p>No sharing or discussing illegal activities.</p>
+          <p>Hacking, doxxing, or any form of cybercrime.</p>
+          <p style="margin-bottom: 50px;" >All chat logs are stored and may be reported to authorities if necessary.</p>
+
           <h3>3. No Hate Speech</h3>
-          <p>Absolutely no racism, sexism, homophobia, or hate of any kind.</p>
-          <p>Slurs and offensive language are not tolerated.</p>
+          <p>Absolutely no racism, homophobia, transphobia, sexism, ableism, xenophobia or hate of any kind.</p>
+          <p style="margin-bottom: 50px;">Mild slurs are allowed but excessive use of foul or offensive language will not be tolerated.</p>
+
           <h3>4. Keep It Clean</h3>
-          <p>No explicit or NSFW content (sexual, violent, or graphic).</p>
-          <p>This chat is meant to be safe and appropriate for all users.</p>
+          <p>No explicit or NSFW content, this includes but is not limited to:</p>
+          <p>- Pornographic, sexually suggestive, or erotic material</p>
+          <p>- Graphic violence or gore</p>
+          <p>- Any content that is not suitable for minors</p>
+          <p style="margin-bottom: 50px;">This chat is meant to be safe and appropriate for all users.</p>
+
           <h3>5. No Spamming or Flooding</h3>
           <p>Don't send repetitive messages or walls of text.</p>
           <p>No advertising or self-promotion.</p>
+          <p style="margin-bottom: 50px;">Avoid all forms of disruptive formatting.</p>
+
           <h3>6. Use an Appropriate Nickname</h3>
           <p>Do not impersonate others.</p>
           <p>No offensive, misleading, or vulgar nicknames.</p>
-          <h3>Respect Privacy</h3>
+          <p style="margin-bottom: 50px;">You may be asked to change your nickname if it is found to violate these rules.</p>
+
+          <h3>6. Respect Personal Privacy</h3>
           <p>Do not share personal info (yours or others): full names, addresses, phone numbers, passwords, etc.</p>
-          <p>Do not ask others for private details.</p>
-          <h3>⚠️ All messages are logged. If you engage in illegal activity, your information may be shared with law enforcement. Use this chat responsibly.</h3>
+          <p style="margin-bottom: 50px;">Do not ask others for private details.</p>
+
+          <h3>Final Provisions</h3>
+          <p>We reserve the right to modify or update these rules at any time. Continued use of the chat constitutes acceptance of the current version.</p>
+          <p style="margin-bottom: 30px;">All messages are logged. If you engage in illegal activity, your information may be shared with law enforcement. Use this chat responsibly.<p>
+          <h3 style="padding-bottom: 20px;">If you have any questions, concerns, or to report violations, please contact a moderator or admin within our 
+            <a href="https://discord.gg/bUhe5mQmbz" style="text-decoration: underline; color: #f1f1f1; ">Discord server</a>.
+          </h3>
         </div><!--↑ rules-->
       </div>
     </div>
