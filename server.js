@@ -20,6 +20,15 @@ const nicknames = new Set();
 const chatLog = [];
 
 
+const MESSAGE_LIMIT = 10;
+const TIME_WINDOW_MS = 5000; 
+const TIMEOUT_DURATION_MS = 60000; 
+
+
+const userMessageTimestamps = new Map();
+
+const timedOutUsers = new Map(); 
+
 app.use(express.static(publicPath));
 app.use("/uv/", express.static(uvPath));
 app.use("/epoxy/", express.static(epoxyPath));
@@ -46,8 +55,12 @@ function emitActiveUsersCount() {
   io.emit("active users", nicknames.size);
 }
 
+
 io.on("connection", (socket) => {
+  console.log('A user connected:', socket.id);
   let userNickname = null;
+
+  userMessageTimestamps.set(socket.id, []);
 
   socket.on("set nickname", (nickname, callback) => {
     nickname = nickname.trim().toLowerCase();
@@ -83,31 +96,72 @@ io.on("connection", (socket) => {
   });
 
   function logMessageToFile(msg) {
-  const time = new Date(msg.time).toLocaleString();
-  const line = `[${time}] [${msg.name}]: ${msg.text}\n`;
-  fs.appendFile("chatlog.txt", line, (err) => {
-    if (err) console.error("Failed to write chat log:", err);
+    const time = new Date(msg.time).toLocaleString();
+    const line = `[${time}] [${msg.name}]: ${msg.text}\n`;
+    fs.appendFile("chatlog.txt", line, (err) => {
+      if (err) console.error("Failed to write chat log:", err);
+    });
+  }
+
+
+  socket.on("chat message", (msg) => {
+    if (!userNickname) return;
+
+    const now = Date.now();
+
+
+    if (timedOutUsers.has(socket.id)) {
+      const timeoutEndTime = timedOutUsers.get(socket.id);
+      if (now < timeoutEndTime) {
+        const remainingSeconds = Math.ceil((timeoutEndTime - now) / 1000);
+        socket.emit('rate limited', `You are still timed out. Please wait ${remainingSeconds} more seconds.`);
+        return; 
+      } else {
+        timedOutUsers.delete(socket.id);
+        console.log(`User ${socket.id} (${userNickname}) timeout expired.`);
+        socket.emit('rate limit cleared', 'Your timeout has expired. You may now send messages again.');
+      }
+    }
+
+
+    const timestamps = userMessageTimestamps.get(socket.id);
+
+    const filteredTimestamps = timestamps.filter(
+      (timestamp) => now - timestamp < TIME_WINDOW_MS
+    );
+    userMessageTimestamps.set(socket.id, filteredTimestamps);
+
+    filteredTimestamps.push(now);
+
+    if (filteredTimestamps.length > MESSAGE_LIMIT) {
+      console.warn(`rate limit exceeded for user: ${socket.id} (${userNickname})`);
+
+      const timeoutEndTime = now + TIMEOUT_DURATION_MS;
+      timedOutUsers.set(socket.id, timeoutEndTime);
+
+      socket.emit('rate limited', `You have been rate limited. Please wait 1 minute before sending another message.`);
+
+      userMessageTimestamps.set(socket.id, []);
+
+      return;
+    }
+
+
+    if (msg.text.length > 300) return;
+
+    const messageWithTime = {
+      name: userNickname,
+      text: msg.text,
+      time: Date.now()
+    };
+
+    chatLog.push(messageWithTime);
+    if (chatLog.length > 30) chatLog.shift();
+
+    io.emit("chat message", messageWithTime);
+
+    logMessageToFile(messageWithTime);
   });
-}
-
-socket.on("chat message", (msg) => {
-  if (!userNickname) return;
-
-  if (msg.text.length > 300) return;
-
-  const messageWithTime = {
-    name: userNickname,
-    text: msg.text,
-    time: Date.now()
-  };
-
-  chatLog.push(messageWithTime);
-  if (chatLog.length > 30) chatLog.shift();
-
-  io.emit("chat message", messageWithTime);
-
-  logMessageToFile(messageWithTime);
-});
 
 
   socket.on("disconnect", () => {
@@ -115,6 +169,9 @@ socket.on("chat message", (msg) => {
       nicknames.delete(userNickname);
       emitActiveUsersCount();
     }
+
+    userMessageTimestamps.delete(socket.id);
+    timedOutUsers.delete(socket.id);
   });
 });
 
