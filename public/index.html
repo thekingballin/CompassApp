@@ -164,14 +164,29 @@
 </div>
 <script> 
 function notification(text) {
-  const not = document.getElementById('notification');
+  const not = document.createElement('div');
+  not.className = 'notification';
+  not.id = 'notification';
   console.log('new notification:', text);
   not.textContent = text;
-  not.classList.add('show');
+  const loadingBar = document.createElement('div');
+  loadingBar.className = 'notification-loading-bar';
+  not.appendChild(loadingBar);
+  document.body.appendChild(not);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      not.classList.add('show');
+      loadingBar.classList.add('animate');
+    });
+  });
   setTimeout(() => {
     not.classList.remove('show');
+    setTimeout(() => {
+      not.remove();
+    }, 500);
   }, 3000);
 }
+
 </script>
 <script>
   const selector = document.getElementById('themeSelector');
@@ -185,13 +200,27 @@ function notification(text) {
     const selected = selector.value;
     document.documentElement.setAttribute('data-theme', selected);
     localStorage.setItem('theme', selected);
+    notification('Changed theme!')
+    if (selected === 'dark') {
+          document.documentElement.style.setProperty('--accent-color', '#2f2f2f');
+    } else if (selected === 'light') {
+          document.documentElement.style.setProperty('--accent-color', '#c1c1c1');
+    } else if (selected === 'purple') {
+          document.documentElement.style.setProperty('--accent-color', '#bb00ff');
+    } else if (selected === 'blue') {
+          document.documentElement.style.setProperty('--accent-color', '#0099ff');
+    } else if (selected === 'green') {
+          document.documentElement.style.setProperty('--accent-color', '#0dff00');
+    } else if (selected === 'red') {
+          document.documentElement.style.setProperty('--accent-color', '#ff0000');
+    }
     if (localStorage.getItem('theme') === 'RGB') {
       startRGB();
       document.getElementById('rgbspeed').style.display = 'block';
     } else {
       stopRGB();
       document.getElementById('rgbspeed').style.display = 'none';
-      element.style.setProperty('--accent-color', 'unset');
+
     }
   });
 </script>
@@ -223,6 +252,7 @@ let speed = 50;
 
 document.getElementById('speedslider').addEventListener('input', function(event) {
   speed = document.getElementById('speedslider').value
+  localStorage.setItem('rgbspeed', speed)
   restartRGB()
 });
 function restartRGB() {
@@ -246,6 +276,11 @@ function stopRGB() {
 }
 
 if (localStorage.getItem('theme') === 'RGB') {
+  if (localStorage.getItem('rgbspeed')) {
+  const localStoragespeed = localStorage.getItem('rgbspeed');
+  speed = localStoragespeed
+  document.getElementById('speedslider').value = speed;
+  }
   startRGB();
 } else {
   stopRGB();
