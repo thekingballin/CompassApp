@@ -1,28 +1,19 @@
 # CompassApp
 The new version of Compass!
 
-Build command : npm i
+Developers--
 
-Start command : node server.js
+-thekingballin : Backend and Frontend
+-Citraw : Frontend
+-xpki : Discord server manager
 
---To run locally follow these steps:--
+Credits--
 
+Ultraviolet how to: https://github.com/crllect/How-to-make-an-ultraviolet-proxy/ 
+Games : https://github.com/selenite-cc/selenite-old
+Chat api : https://socket.io
 
-Prerequesities - node js
+If you are a collaborator, once complete with the testing, please DO NOT forget to delete the chatlog. Then you may commit the files to the branch.
 
-Open terminal and cd into the project directory
-
-enter "npm i" and wait until process is complete
-
-enter "node server.js".
-
-The application will be hosted on localhost:8080
-
-To close the server press ctrl + c
-
-If you are a collaborator, once complete with the testing, DO NOT forget to delete "node_modules". Then you may commit the files to the branch.
-
-
-
-Credits to crllect
-https://github.com/crllect/How-to-make-an-ultraviolet-proxy/
+build command : npm i
+start command : node server.js
